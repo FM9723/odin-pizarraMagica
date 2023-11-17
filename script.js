@@ -1,25 +1,49 @@
 
 const container = document.getElementById('container');
-function makeGrid() {
-    var index = 1 ;
-    for (let i = 0; i < 16; i++) {
+const sizeButton = document.getElementById('size');
+let pixels;
+
+function makeGrid(input) {
+    let index =  1;
+
+    for (let i = 0; i < input; i++) {
         var rowItem = document.createElement('div');
         rowItem.className = "rowItem";
+        rowItem.addEventListener('mouseover', function (e) {
+            e.target.style.backgroundColor = 'blue';
+
+        });
         container.appendChild(rowItem);
-        for (let j = 0; j < 16; j++) {
+        for (let j = 0; j < input; j++) {
             var item = document.createElement('div');
             item.className = "item";
             item.textContent = index;
             index++;
-            item.addEventListener("mouseover",(e) => {
-                item.style.backgroundColor = "#ccc";
-            });
 
-            
+
             rowItem.appendChild(item);
         }
     }
+
 }
 
-makeGrid();
+function clearGrid(){
+    while(container.firstChild)
+    {
+        container.removeChild(container.firstChild);
+    }
+}
+
+sizeButton.addEventListener("click", (event) => {
+    do {
+        pixels = prompt('Por favor ingrese un numero positivo ... ');
+        
+    } while (isNaN(pixels) || pixels < 0 || pixels > 100);
+    clearGrid();
+    makeGrid(pixels);
+});
+
+
+makeGrid(16);
+
 
